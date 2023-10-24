@@ -249,13 +249,12 @@ export const runAction = async (space): Promise<void> => {
     if (k === undefined) {
         Logger.warn(`could not find ephemeral toke ${tokenKeyName}, possibly it was deleted manually`);
     } else {
-      try {
-        k.delete();
+      k.delete().then(() => {
         Logger.success(`removed ephemeral token ${tokenKeyName}`);
-      } catch(error) {
+      }).catch(error => {
         Logger.error("Unable to delete ephemeral token");
         Logger.error(error);
-      };
+      });
     };
   };
 
